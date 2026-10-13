@@ -167,19 +167,44 @@
       .add(() => $(".qv-close").focus(), 0.5);
   }
 
+  let closing = false;
   function closeQuickView() {
-    if (!qv.classList.contains("is-open")) return;
+    if (!qv.classList.contains("is-open") || closing) return;
     const done = () => {
       qv.classList.remove("is-open");
+      gsap.set(panel, { clearProps: "opacity,scale" });
       lenis?.start();
       document.body.style.overflow = "";
       lastFocus?.focus({ preventScroll: true });
+      closing = false;
     };
     if (reduce) return done();
-    gsap.timeline({ onComplete: done })
-      .to(".qv-info > *", { opacity: 0, duration: 0.25 }, 0)
-      .to(panel, { clipPath: clipFor(fromTile), duration: 0.75, ease: "expo.inOut" }, 0.05)
-      .to(".qv-backdrop", { opacity: 0, duration: 0.5 }, 0.3);
+    closing = true;
+    // the scrollbar comes back first, so the shelf is measured where it will be once the panel is gone
+    document.body.style.overflow = "";
+    // the product flies out of the panel and lands on its own spot on the shelf, while the panel fades away
+    const big = $(".qv-media .product-img");
+    const home = $(".product-img", fromTile);
+    const a = big.getBoundingClientRect(), b = home.getBoundingClientRect();
+    const fly = big.cloneNode();
+    fly.className = "product-img";
+    Object.assign(fly.style, {
+      position: "fixed", left: a.left + "px", top: a.top + "px", width: a.width + "px", height: a.height + "px",
+      maxWidth: "none", maxHeight: "none", margin: 0, zIndex: 61, pointerEvents: "none", transition: "none",
+    });
+    document.body.appendChild(fly);
+    big.style.visibility = "hidden";
+    home.style.visibility = "hidden";
+    gsap.timeline({ onComplete() { home.style.visibility = ""; fly.remove(); done(); } })
+      .to(".qv-info > *", { opacity: 0, duration: 0.2 }, 0)
+      .to(panel, { opacity: 0, scale: 0.97, duration: 0.45, ease: "power2.in" }, 0.05)
+      .to(".qv-backdrop", { opacity: 0, duration: 0.55, ease: "power2.out" }, 0.2)
+      .to(fly, {
+        x: b.left + b.width / 2 - (a.left + a.width / 2), y: b.top + b.height / 2 - (a.top + a.height / 2), scale: b.width / a.width,
+        rotation: current.shape === "ball" ? -360 : 0,
+        filter: "drop-shadow(0 6px 10px rgba(20, 14, 10, .18))",
+        duration: 0.85, ease: "expo.inOut",
+      }, 0);
   }
   $$("[data-close-qv]").forEach((b) => b.addEventListener("click", closeQuickView));
 
