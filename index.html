@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halflight — About</title>
+  <meta name="description" content="Halflight is a basketball shop for night runs and day games. Every ball, shoe and shirt is tested on public courts before we sell it.">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      try {
+        if (sessionStorage.getItem("hl-transition")) d.classList.add("is-entering", "skip-intro");
+        if (sessionStorage.getItem("hl-intro-seen")) d.classList.add("skip-intro");
+      } catch (e) {}
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) d.classList.add("skip-intro");
+    })();
+  </script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#1E252B">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Halflight, a concept by ELIS2code">
+  <meta property="og:title" content="Halflight — About">
+  <meta property="og:description" content="Halflight is a basketball shop for night runs and day games. Every ball, shoe and shirt is tested on public courts before we sell it.">
+  <meta property="og:image" content="media/night-duel.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400..900&family=Archivo:wdth,wght@62..125,300..800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preload" as="image" href="media/night-duel.jpg">
+</head>
+<body class="about">
+
+  <!-- page transition: two halves of the light, night and orange, close over the page -->
+  <div class="pt" aria-hidden="true">
+    <div class="pt-half pt-l"><div class="pt-inner"><span class="pt-word"></span><i class="pt-line"></i></div></div>
+    <div class="pt-half pt-r"><div class="pt-inner"><span class="pt-word"></span><i class="pt-line"></i></div></div>
+  </div>
+  <script>
+    try { var n = sessionStorage.getItem("hl-transition"); if (n) document.querySelectorAll(".pt-word").forEach(function (w) { w.textContent = n; }); } catch (e) {}
+  </script>
+
+  <!-- first-visit intro: the court draws itself -->
+  <div class="intro" aria-hidden="true">
+    <svg viewBox="0 0 560 300">
+      <line x1="0" y1="150" x2="560" y2="150"/>
+      <circle cx="280" cy="150" r="70"/>
+      <circle cx="280" cy="150" r="22"/>
+      <path d="M0 40 H90 A110 110 0 0 1 90 260 H0"/>
+      <path d="M560 40 H470 A110 110 0 0 0 470 260 H560"/>
+    </svg>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" data-transition="About" aria-label="Halflight, about">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 1.5a10.5 10.5 0 0 0 0 21z" fill="currentColor"/></svg>
+      Halflight
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" aria-current="page"><span class="nav-about-label">About</span></a>
+      <a href="store.html" data-transition="Store">Store</a>
+      <a class="cart-btn" href="store.html#cart" data-transition="Store">Cart <span class="cart-count">0</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO: the name is a window onto the night court -->
+    <section class="hero" aria-labelledby="hero-title" data-header="dark">
+      <div class="hero-stage">
+        <video class="cover-video" data-auto muted loop playsinline preload="auto" poster="media/night-duel.jpg">
+          <source src="media/m/night-duel.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/night-duel.mp4" type="video/mp4">
+        </video>
+        <svg class="hero-mask" aria-hidden="true">
+          <defs>
+            <mask id="word-mask" maskUnits="userSpaceOnUse">
+              <rect class="mask-bg" fill="#fff"/>
+              <g fill="#000"><g id="hero-word" class="mask-word"><text text-anchor="middle" font-family="'Big Shoulders Display', 'Big Shoulders', Impact, 'Arial Narrow', sans-serif" font-weight="900">HALFLIGHT</text></g></g>
+            </mask>
+          </defs>
+          <rect class="mask-fill" style="fill: var(--night)" mask="url(#word-mask)"/>
+          <!-- the same word again, drawn as an orange outline around every letter.
+               A real copy, not a <use> of the mask's word: some browsers drop <use> clones of mask content -->
+          <g class="hero-outline"><text text-anchor="middle" font-family="'Big Shoulders Display', 'Big Shoulders', Impact, 'Arial Narrow', sans-serif" font-weight="900">HALFLIGHT</text></g>
+        </svg>
+        <div class="hero-sub">
+          <p>A basketball shop for night runs and day games.</p>
+          <span class="scroll-cue"><i></i>Scroll to step onto the court</span>
+        </div>
+        <div class="hero-shade"></div>
+        <div class="hero-line">
+          <h1 id="hero-title" class="display split">We opened on a court with one working light</h1>
+          <p class="fade-in">Halflight started as a Thursday pickup game under a single flickering lamp. Ten years on, we still sell only what holds up in that game.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NIGHT: a sentence with footage inside it, then the wall of the court -->
+    <section class="night" aria-labelledby="night-title">
+      <div class="night-stage">
+        <div class="statement">
+          <svg class="statement-seams" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g fill="none" stroke="#2B1D18" stroke-width=".5">
+              <path d="M-20 100 Q100 116 220 100"/>
+              <path d="M100 -20 Q84 100 100 220"/>
+              <path d="M24 -6 Q82 100 24 206"/>
+              <path d="M176 -6 Q118 100 176 206"/>
+            </g>
+          </svg>
+          <h2 id="night-title" class="statement-text" aria-label="Six friends, one lamp, every Thursday">
+            <span class="st-line" aria-hidden="true">Six friends</span>
+            <span class="st-line" aria-hidden="true">One lamp <span class="pill pill-spin"></span></span>
+            <span class="st-line" aria-hidden="true">Every Thursday</span>
+          </h2>
+          <p class="statement-note">That's how Halflight started: a pickup game under the only working light on the court. Ten years later, we're still there.</p>
+        </div>
+
+        <div class="wall" aria-hidden="true">
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-crouch.jpg"><source src="media/m/n-crouch.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-crouch.mp4" type="video/mp4"></video></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-sneakers.jpg"><source src="media/m/n-sneakers.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-sneakers.mp4" type="video/mp4"></video><figcaption>Footwork</figcaption></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-hold.jpg"><source src="media/m/n-hold.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-hold.mp4" type="video/mp4"></video></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-legs.jpg"><source src="media/m/n-legs.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-legs.mp4" type="video/mp4"></video><figcaption>Contact</figcaption></figure>
+          <figure class="tile tile-center"></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-hand.jpg"><source src="media/m/n-hand.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-hand.mp4" type="video/mp4"></video><figcaption>Grip</figcaption></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-line.jpg"><source src="media/m/n-line.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-line.mp4" type="video/mp4"></video></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-face.jpg"><source src="media/m/n-face.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-face.mp4" type="video/mp4"></video><figcaption>Focus</figcaption></figure>
+          <figure class="tile"><video data-auto muted loop playsinline preload="none" poster="media/n-dribble.jpg"><source src="media/m/n-dribble.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-dribble.mp4" type="video/mp4"></video></figure>
+        </div>
+
+        <div class="wall-layer" aria-hidden="true">
+          <video data-auto muted loop playsinline preload="metadata" poster="media/n-spin.jpg"><source src="media/m/n-spin.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/n-spin.mp4" type="video/mp4"></video>
+        </div>
+
+        <div class="wall-copy">
+          <h3 class="display">Every shelf in our store starts on this court</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE STREET: three scenes dealt like a deck of cards. Each scene shrinks into a card,
+         gets swiped off the top of the deck, and the next card comes forward and fills the screen. -->
+    <section class="street" aria-labelledby="swish-title">
+      <div class="street-stage">
+
+        <div class="deck-card card-c">
+          <div class="closer-light" aria-hidden="true"></div>
+          <figure class="closer-ball" aria-hidden="true">
+            <div class="closer-drop">
+              <div class="closer-hop"><img class="closer-img" src="media/products/molten-gg7x.webp" alt="" draggable="false"></div>
+            </div>
+            <span class="closer-shadow"></span>
+            <svg class="closer-court" viewBox="0 0 600 90" aria-hidden="true"><ellipse cx="300" cy="45" rx="296" ry="40" pathLength="1"/></svg>
+          </figure>
+          <div class="closer-copy">
+            <h2 class="sr-only">Shop online</h2>
+            <a class="shop-btn" href="store.html" data-transition="Store" data-magnet="0.3">
+              <span class="shop-btn-fill" aria-hidden="true"></span>
+              <span class="shop-btn-text" data-text="Shop online"><span>Shop online</span></span>
+            </a>
+            <p>Balls, shoes, apparel and gear, shipped to your door.</p>
+          </div>
+        </div>
+
+        <div class="deck-card card-b">
+          <video class="cover-video" data-auto muted loop playsinline preload="none" poster="media/day-portrait.jpg">
+            <source src="media/m/day-portrait.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/day-portrait.mp4" type="video/mp4">
+          </video>
+          <div class="day-reveal-copy">
+            <h2 id="day-title" class="display">Tested on public courts for a month first</h2>
+            <span class="court-line" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <div class="deck-card card-a">
+          <video class="cover-video" data-auto muted loop playsinline preload="none" poster="media/basket.jpg">
+            <source src="media/m/basket.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/basket.mp4" type="video/mp4">
+          </video>
+          <div class="card-night" aria-hidden="true"></div>
+          <div class="swish-copy">
+            <h2 id="swish-title" class="display">Then we took it outside</h2>
+            <span class="court-line" aria-hidden="true"></span>
+            <p>Same game, new court. More players, more noise, and the sun doing the lighting.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-header="dark">
+    <a class="brand" href="index.html" data-transition="About">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 1.5a10.5 10.5 0 0 0 0 21z" fill="currentColor"/></svg>
+      Halflight
+    </a>
+    <nav aria-label="Footer">
+      <a href="index.html" data-transition="About">About</a>
+      <a href="store.html" data-transition="Store">Store</a>
+      <a href="mailto:hello@example.com">Contact</a>
+    </nav>
+    <span>© 2026 Halflight</span>
+    <div class="footer-credit">
+      <p class="concept-note"><strong>Concept site.</strong> Halflight is not a real store: nothing here is for sale and no order is ever placed. Product names and brands belong to their owners; this site is not affiliated with them.</p>
+      <span class="made-by">Designed and built by
+        <span class="e2c" role="img" aria-label="ELIS2code"><span class="e2c-eli">ELI</span><span class="e2c-s2">S2</span><span class="e2c-code">code</span><i class="e2c-cursor" aria-hidden="true"></i></span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/street.js"></script>
+  <script src="js/about.js"></script>
+</body>
+</html>

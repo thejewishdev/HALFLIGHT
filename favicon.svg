@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .cursor { animation: blink 1.06s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+  <rect width="64" height="64" rx="14" fill="#302C52"/>
+  <text x="27" y="41" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="30" letter-spacing="-1" fill="#E8455F">S2</text>
+  <rect class="cursor" x="50" y="37" width="8" height="4" fill="#ECEAF2"/>
+</svg>

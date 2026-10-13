@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halflight — Store</title>
+  <meta name="description" content="Basketballs, shoes, apparel and gear, all tested on public courts before we sell them.">
+  <script>
+    (function () {
+      try { if (sessionStorage.getItem("hl-transition")) document.documentElement.classList.add("is-entering"); } catch (e) {}
+    })();
+  </script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#1E252B">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Halflight, a concept by ELIS2code">
+  <meta property="og:title" content="Halflight — Store">
+  <meta property="og:description" content="Basketballs, shoes, apparel and gear, all tested on public courts before we sell them.">
+  <meta property="og:image" content="media/day-game.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400..900&family=Archivo:wdth,wght@62..125,300..800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preload" as="image" href="media/day-game.jpg">
+</head>
+<body class="store">
+
+  <!-- page transition: two halves of the light, night and orange, close over the page -->
+  <div class="pt" aria-hidden="true">
+    <div class="pt-half pt-l"><div class="pt-inner"><span class="pt-word"></span><i class="pt-line"></i></div></div>
+    <div class="pt-half pt-r"><div class="pt-inner"><span class="pt-word"></span><i class="pt-line"></i></div></div>
+  </div>
+  <script>
+    try { var n = sessionStorage.getItem("hl-transition"); if (n) document.querySelectorAll(".pt-word").forEach(function (w) { w.textContent = n; }); } catch (e) {}
+  </script>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" data-transition="About" aria-label="Halflight, about">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 1.5a10.5 10.5 0 0 0 0 21z" fill="currentColor"/></svg>
+      Halflight
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" data-transition="About"><span class="nav-about-label">About</span></a>
+      <a href="store.html" aria-current="page">Store</a>
+      <button class="cart-btn" type="button" data-open-cart aria-haspopup="dialog">Cart <span class="cart-count">0</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="store-hero" aria-labelledby="store-title" data-header="dark">
+      <div class="frame">
+        <video class="cover-video" data-auto muted loop playsinline preload="auto" poster="media/day-game.jpg">
+          <source src="media/m/day-game.mp4" type="video/mp4" media="(max-width: 600px) and (orientation: portrait)"><source src="media/day-game.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="store-title">
+        <div>
+          <h1 id="store-title" class="display">Store</h1>
+          <span class="court-line" aria-hidden="true"></span>
+        </div>
+        <p>Balls, shoes, apparel and gear for the court, the park and the pickup game after work.</p>
+      </div>
+    </section>
+
+    <div class="shelf-bar" data-header="light">
+      <nav class="filters" aria-label="Jump to a category">
+        <span class="filter-pill" aria-hidden="true"></span>
+        <a href="#floor-balls" data-cat="balls" aria-current="location">Balls</a>
+        <a href="#floor-shoes" data-cat="shoes">Shoes</a>
+        <a href="#floor-apparel" data-cat="apparel">Apparel</a>
+        <a href="#floor-gear" data-cat="gear">Gear</a>
+      </nav>
+      <p class="shelf-note">Everything is drawn to scale</p>
+    </div>
+
+    <!-- every product stands on the court line, drawn at its real size next to the others -->
+    <div class="floors" data-header="light"></div>
+  </main>
+
+  <!-- quick view -->
+  <div class="qv" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+    <div class="qv-backdrop" data-close-qv></div>
+    <div class="qv-panel">
+      <button class="qv-close" type="button" data-close-qv aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="qv-media">
+        <div class="card-art"></div>
+      </div>
+      <div class="qv-info" data-lenis-prevent>
+        <h2 id="qv-title" class="display"></h2>
+        <p class="price"></p>
+        <p class="desc"></p>
+        <ul class="specs"></ul>
+        <fieldset class="sizes"></fieldset>
+        <div class="qv-actions">
+          <button class="btn" type="button" data-add>Add to cart</button>
+          <p class="qv-note">Concept store: nothing here is for sale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- cart -->
+  <div class="drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="drawer-backdrop" data-close-cart></div>
+    <aside class="drawer-panel">
+      <div class="drawer-head">
+        <h2 id="cart-title" class="display">Your cart</h2>
+        <div class="drawer-head-actions">
+          <button class="drawer-clear" type="button" data-clear>Clear all</button>
+          <button class="qv-close" style="position:static" type="button" data-close-cart aria-label="Close cart">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+      </div>
+      <ul class="drawer-list" data-lenis-prevent></ul>
+      <div class="drawer-empty" hidden>
+        <p aria-live="polite">Your cart is empty. Start with a ball; everything else follows.</p>
+        <div class="drawer-empty-actions">
+          <button class="drawer-undo" type="button" data-undo hidden>Undo</button>
+          <button type="button" data-close-cart>Browse the store</button>
+        </div>
+      </div>
+      <div class="drawer-foot">
+        <div class="row"><span>Subtotal</span><span data-subtotal>$0</span></div>
+        <div class="row"><span>Shipping</span><span data-shipping>$0</span></div>
+        <div class="row total"><span>Total</span><span data-total>$0</span></div>
+        <button class="btn" type="button" data-checkout>Check out</button>
+        <p class="drawer-note" aria-live="polite"></p>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="site-footer" data-header="dark">
+    <a class="brand" href="index.html" data-transition="About">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 1.5a10.5 10.5 0 0 0 0 21z" fill="currentColor"/></svg>
+      Halflight
+    </a>
+    <nav aria-label="Footer">
+      <a href="index.html" data-transition="About">About</a>
+      <a href="store.html">Store</a>
+      <a href="mailto:hello@example.com">Contact</a>
+    </nav>
+    <span>© 2026 Halflight</span>
+    <div class="footer-credit">
+      <p class="concept-note"><strong>Concept site.</strong> Halflight is not a real store: nothing here is for sale and no order is ever placed. Product names and brands belong to their owners; this site is not affiliated with them.</p>
+      <span class="made-by">Designed and built by
+        <span class="e2c" role="img" aria-label="ELIS2code"><span class="e2c-eli">ELI</span><span class="e2c-s2">S2</span><span class="e2c-code">code</span><i class="e2c-cursor" aria-hidden="true"></i></span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/MotionPathPlugin.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/store.js"></script>
+</body>
+</html>
