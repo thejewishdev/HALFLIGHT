@@ -143,20 +143,15 @@
       return;
     }
     store.session("hl-intro-seen", "1");
-    lenis?.stop();
+    // the court has been drawing in CSS since the first paint; open it as soon as the drawing is done
     const intro = $(".intro");
-    const lines = $$("line, circle, path", intro);
-    lines.forEach((el) => {
-      const len = el.getTotalLength();
-      gsap.set(el, { strokeDasharray: len, strokeDashoffset: len });
-    });
-    const introTl = gsap.timeline({ onComplete() { intro.remove(); lenis?.start(); } });
-    finishSoon(introTl, 6000);
+    const wait = Math.max(0, 1.4 - performance.now() / 1000);
+    lenis?.stop();
+    const introTl = gsap.timeline({ delay: wait, onComplete() { intro.remove(); lenis?.start(); } });
+    finishSoon(introTl, (wait + 2) * 1000);
     introTl
-      .to(lines, { strokeDashoffset: 0, duration: 1.3, stagger: 0.12, ease: "power2.inOut" })
-      .to(intro.querySelector("circle:nth-of-type(2)"), { fill: "#C4542A", stroke: "#C4542A", duration: 0.3 }, "-=0.4")
-      .fromTo(intro, { clipPath: "circle(150% at 50% 50%)" }, { clipPath: "circle(0% at 50% 50%)", duration: 1.2, ease: "expo.inOut" }, "+=0.15")
-      .add(heroIn(), "-=0.9");
+      .fromTo(intro, { clipPath: "circle(150% at 50% 50%)" }, { clipPath: "circle(0% at 50% 50%)", duration: 1, ease: "expo.inOut" })
+      .add(heroIn(), "-=0.8");
   }
 
   /* ---------- SHOP ONLINE: the fill starts where the pointer comes in, and the ball hops ---------- */

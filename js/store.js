@@ -54,7 +54,7 @@
   // phones fire resize whenever the toolbar slides in or out; only a new width changes the rows
   const onWidthChange = (fn) => { let w = innerWidth; addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; fn(); } }); };
   onWidthChange(layoutFloors);
-  items.forEach((btn) => btn.addEventListener("click", () => openQuickView(byId[btn.dataset.id], $(".item-stand", btn))));
+  items.forEach((btn) => btn.addEventListener("click", () => openQuickView(byId[btn.dataset.id])));
 
   /* ---------- hero ---------- */
   const titleChars = splitChars($(".store-title h1"));
@@ -84,16 +84,6 @@
       .to(".store-title", { yPercent: -60, ease: "none" }, 0)
       .to(".store-hero video", { yPercent: 12, ease: "none" }, 0);
 
-    // products settle onto the line as each row arrives
-    ScrollTrigger.batch(items, {
-      start: "top 92%",
-      once: true,
-      onEnter: (batch) => {
-        gsap.timeline()
-          .from(batch.map((b) => $(".item-art", b)), { yPercent: -30, opacity: 0, duration: 1, stagger: 0.08, ease: "expo.out" }, 0)
-          .from(batch.map((b) => $(".item-meta", b)), { opacity: 0, y: 12, duration: 0.7, stagger: 0.08, ease: "power2.out" }, 0.35);
-      },
-    });
   }
 
   /* ---------- category links: jump to a floor, and follow along while scrolling ---------- */
@@ -127,18 +117,13 @@
     lenis ? lenis.scrollTo(top, { duration: 1.2 }) : scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
   }));
 
-  /* ---------- quick view: the tile grows into the panel ---------- */
+  /* ---------- quick view: opens and closes in place, no animation ---------- */
   const qv = $(".qv");
   const panel = $(".qv-panel");
-  let current = null, fromTile = null, lastFocus = null;
+  let current = null, lastFocus = null;
 
-  function clipFor(tile) {
-    const p = panel.getBoundingClientRect(), t = tile.getBoundingClientRect();
-    return `inset(${t.top - p.top}px ${p.right - t.right}px ${p.bottom - t.bottom}px ${t.left - p.left}px round 6px)`;
-  }
-
-  function openQuickView(p, tile) {
-    current = p; fromTile = tile; lastFocus = document.activeElement;
+  function openQuickView(p) {
+    current = p; lastFocus = document.activeElement;
     panel.style.setProperty("--tile", p.tile);
     $(".qv-media .card-art").dataset.shape = p.shape;
     $(".qv-media .card-art").innerHTML = `<span class="card-float">${art(p)}</span><span class="card-shadow"></span>`;
@@ -158,53 +143,15 @@
     qv.classList.add("is-open");
     lenis?.stop();
     document.body.style.overflow = "hidden";
-    if (reduce) { $(".qv-close").focus(); return; }
-    gsap.timeline()
-      .fromTo(".qv-backdrop", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0)
-      .fromTo(panel, { clipPath: clipFor(tile) }, { clipPath: "inset(0px 0px 0px 0px round 8px)", duration: 0.9, ease: "expo.inOut" }, 0)
-      .fromTo(".qv-media .card-art", { scale: 0.6, rotation: -20 }, { scale: 1, rotation: 0, duration: 1.2, ease: "expo.out" }, 0.25)
-      .fromTo(".qv-info > *", { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.7, ease: "power3.out" }, 0.45)
-      .add(() => $(".qv-close").focus(), 0.5);
+    $(".qv-close").focus();
   }
 
-  let closing = false;
   function closeQuickView() {
-    if (!qv.classList.contains("is-open") || closing) return;
-    const done = () => {
-      qv.classList.remove("is-open");
-      gsap.set(panel, { clearProps: "opacity,scale" });
-      lenis?.start();
-      document.body.style.overflow = "";
-      lastFocus?.focus({ preventScroll: true });
-      closing = false;
-    };
-    if (reduce) return done();
-    closing = true;
-    // the scrollbar comes back first, so the shelf is measured where it will be once the panel is gone
+    if (!qv.classList.contains("is-open")) return;
+    qv.classList.remove("is-open");
+    lenis?.start();
     document.body.style.overflow = "";
-    // the product flies out of the panel and lands on its own spot on the shelf, while the panel fades away
-    const big = $(".qv-media .product-img");
-    const home = $(".product-img", fromTile);
-    const a = big.getBoundingClientRect(), b = home.getBoundingClientRect();
-    const fly = big.cloneNode();
-    fly.className = "product-img";
-    Object.assign(fly.style, {
-      position: "fixed", left: a.left + "px", top: a.top + "px", width: a.width + "px", height: a.height + "px",
-      maxWidth: "none", maxHeight: "none", margin: 0, zIndex: 61, pointerEvents: "none", transition: "none",
-    });
-    document.body.appendChild(fly);
-    big.style.visibility = "hidden";
-    home.style.visibility = "hidden";
-    gsap.timeline({ onComplete() { home.style.visibility = ""; fly.remove(); done(); } })
-      .to(".qv-info > *", { opacity: 0, duration: 0.2 }, 0)
-      .to(panel, { opacity: 0, scale: 0.97, duration: 0.45, ease: "power2.in" }, 0.05)
-      .to(".qv-backdrop", { opacity: 0, duration: 0.55, ease: "power2.out" }, 0.2)
-      .to(fly, {
-        x: b.left + b.width / 2 - (a.left + a.width / 2), y: b.top + b.height / 2 - (a.top + a.height / 2), scale: b.width / a.width,
-        rotation: current.shape === "ball" ? -360 : 0,
-        filter: "drop-shadow(0 6px 10px rgba(20, 14, 10, .18))",
-        duration: 0.85, ease: "expo.inOut",
-      }, 0);
+    lastFocus?.focus({ preventScroll: true });
   }
   $$("[data-close-qv]").forEach((b) => b.addEventListener("click", closeQuickView));
 
@@ -367,7 +314,7 @@
       const item = floors.querySelector(`[data-id="${linked.id}"]`);
       const top = item.getBoundingClientRect().top + scrollY - 160;
       lenis ? lenis.scrollTo(top, { immediate: true }) : scrollTo(0, top);
-      setTimeout(() => openQuickView(linked, $(".item-stand", item)), 500);
+      setTimeout(() => openQuickView(linked), 500);
     }
   });
 })();

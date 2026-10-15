@@ -369,7 +369,20 @@ html.is-entering .pt { pointer-events: auto; }
   pointer-events: none;
 }
 .intro svg { width: min(78vw, 560px); height: auto; overflow: visible; }
-.intro path, .intro circle, .intro line { fill: none; stroke: var(--orange); stroke-width: 2.5; }
+.intro path, .intro circle, .intro line {
+  fill: none; stroke: var(--orange); stroke-width: 2.5;
+  /* the lines draw from the first paint, before any script has arrived */
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: intro-draw 1s cubic-bezier(.65, 0, .35, 1) forwards;
+}
+.intro :nth-child(2) { animation-delay: .08s; }
+/* if the scripts are still on their way, the centre keeps breathing instead of sitting still */
+.intro :nth-child(3) { animation-delay: .16s; animation: intro-draw 1s cubic-bezier(.65, 0, .35, 1) .16s forwards, intro-dot .3s 1s forwards, intro-pulse .7s 1.3s ease-in-out infinite alternate; }
+.intro :nth-child(4) { animation-delay: .24s; }
+.intro :nth-child(5) { animation-delay: .32s; }
+@keyframes intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes intro-dot { to { fill: #C4542A; stroke: #C4542A; } }
+@keyframes intro-pulse { to { opacity: .45; } }
 .intro-hint {
   position: absolute;
   bottom: 40px;
@@ -915,8 +928,6 @@ body.store { background: var(--chalk); color: var(--umber); }
   place-items: center;
   width: 100%;
   height: 100%;
-  animation: bob 3.6s ease-in-out infinite alternate;
-  animation-delay: var(--d, 0s);
 }
 .product-img {
   display: block;
@@ -936,11 +947,7 @@ body.store { background: var(--chalk); color: var(--umber); }
   height: 9%;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(10, 8, 6, .45), rgba(10, 8, 6, 0));
-  animation: shadow 3.6s ease-in-out infinite alternate;
-  animation-delay: var(--d, 0s);
 }
-@keyframes bob { from { transform: translateY(2%); } to { transform: translateY(-4%); } }
-@keyframes shadow { from { transform: scaleX(1); opacity: 1; } to { transform: scaleX(.8); opacity: .6; } }
 /* ball seams spin */
 
 /* quick view */
