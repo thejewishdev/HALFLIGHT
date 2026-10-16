@@ -251,36 +251,6 @@ html.is-entering .pt-line { transform: none; }
 html.is-entering .pt { pointer-events: auto; }
 
 /* --------------------------------------------------------------------------
-   Cursor (fine pointers only)
-   -------------------------------------------------------------------------- */
-.cursor {
-  position: fixed;
-  left: 0; top: 0;
-  z-index: 90;
-  width: 14px; height: 14px;
-  margin: -7px 0 0 -7px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 0 1.5px rgba(43,29,24,.35);
-  pointer-events: none;
-  display: grid;
-  place-items: center;
-  transition: width .4s var(--ease-out), height .4s var(--ease-out), margin .4s var(--ease-out);
-  opacity: 0;
-}
-.cursor span {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--umber);
-  opacity: 0;
-  transition: opacity .2s;
-  white-space: nowrap;
-}
-.cursor.is-label { width: 88px; height: 88px; margin: -44px 0 0 -44px; }
-.cursor.is-label span { opacity: 1; }
-@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
-
-/* --------------------------------------------------------------------------
    Video defaults
    -------------------------------------------------------------------------- */
 .cover-video {

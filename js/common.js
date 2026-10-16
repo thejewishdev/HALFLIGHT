@@ -1,4 +1,4 @@
-/* Halflight — shared runtime: smooth scroll, page transitions, cursor, video, cart count */
+/* Halflight — shared runtime: smooth scroll, page transitions, video, cart count */
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -189,24 +189,6 @@
       lenis?.start();
     }
   });
-
-  /* ---------- cursor ---------- */
-  if (finePointer && !reduce) {
-    const c = document.createElement("div");
-    c.className = "cursor";
-    c.innerHTML = "<span></span>";
-    document.body.appendChild(c);
-    const text = c.querySelector("span");
-    const xTo = gsap.quickTo(c, "x", { duration: 0.45, ease: "power3" });
-    const yTo = gsap.quickTo(c, "y", { duration: 0.45, ease: "power3" });
-    addEventListener("pointermove", (e) => { xTo(e.clientX); yTo(e.clientY); c.style.opacity = 1; }, { passive: true });
-    document.addEventListener("pointerleave", () => (c.style.opacity = 0));
-    document.addEventListener("pointerover", (e) => {
-      const t = e.target.closest("[data-cursor]");
-      if (t) { text.textContent = t.dataset.cursor; c.classList.add("is-label"); }
-      else c.classList.remove("is-label");
-    });
-  }
 
   /* ---------- magnetic elements ---------- */
   if (finePointer && !reduce) {
