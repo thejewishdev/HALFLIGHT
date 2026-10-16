@@ -874,11 +874,7 @@ body.store { background: var(--chalk); color: var(--umber); }
 .item-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
 .item-price { font-weight: 700; font-variant-numeric: tabular-nums; }
 .item-tag { font-size: 13px; color: #6A605C; }
-/* a product lifts a little off the line; hover only where there is a real pointer */
-@media (hover: hover) {
-  .item-btn:hover .product-img { transform: translateY(-7%); }
-  .item-btn:hover .item-shadow { transform: scaleX(.8); opacity: .6; }
-}
+/* keyboard focus lifts a product a little off the line */
 .item-btn:focus-visible .product-img { transform: translateY(-7%); }
 .item-btn:focus-visible .item-shadow { transform: scaleX(.8); opacity: .6; }
 
